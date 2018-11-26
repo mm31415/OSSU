@@ -30,7 +30,7 @@ public class QuickFindUF {
       to the value of id[q]
     */
     for (int i = 0; i < id.length; i++) {
-      if (id[i] === oldP) {
+      if (id[i] == oldP) {
         id[i] = id[q];
       }
     }
@@ -38,6 +38,7 @@ public class QuickFindUF {
 
   public boolean connected(int p, int q) {
     // equality check returns a boolean value
-    return id[p] === id[q];
+    return id[p] == id[q];
   }
+  
 }

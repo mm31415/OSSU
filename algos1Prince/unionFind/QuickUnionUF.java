@@ -11,6 +11,7 @@
 */
 
 public class QuickUnionUF {
+
   private int[] id;
 
   public QuickUnionUF(int N) {
@@ -20,17 +21,18 @@ public class QuickUnionUF {
     }
   }
 
-  private int root (int i) {
-    if (id[i] === i) return i;
+  private int root(int i) {
+    if (id[i] == i) return i;
 
     return root(id[i]);
   }
 
   public boolean connected(int p, int q) {
-    return root(p) === root(q);
+    return root(p) == root(q);
   }
 
   public void union(int p, int q) {
     id[root(p)] = root(q);
   }
+  
 }
