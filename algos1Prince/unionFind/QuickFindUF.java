@@ -24,12 +24,12 @@ public class QuickFindUF {
   public void union(int p, int q) {
     // store old id of p
     int oldP = id[p];
-    
+
     /*
       iterate through id[] and change id values equal to oldP
       to the value of id[q]
     */
-    for (int i = 0; i < id.length(); i++) {
+    for (int i = 0; i < id.length; i++) {
       if (id[i] === oldP) {
         id[i] = id[q];
       }
