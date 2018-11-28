@@ -19,7 +19,7 @@ public class Percolation {
   public void open(int row, int col) {
     validates(row, col);
 
-    if (isFull(row, col)) {
+    if (!isOpen(row, col)) {
       grid[row - 1][col - 1] = true;
       openSites += 1;
 
@@ -30,26 +30,34 @@ public class Percolation {
         uf.union(p, virtualBottom);
       } else if (row == 1) {
           uf.union(p, virtualTop);
-      } else if (row + 1 <= n && isOpen(row + 1, col)) {
-          uf.union(p, gridValue(row + 1, col, n));
-      } else if (row - 1 >= 1 && isOpen(row - 1, col)) {
-          uf.union(p, gridValue(row - 1, col, n));
-      } else if (col + 1 <= n && isOpen(row, col + 1)) {
-          uf.union(p, gridValue(row, col + 1, n));
-      } else if (col - 1 >= 1 && isOpen(row, col - 1)) {
-          uf.union(p, gridValue(row, col - 1, n));
+      }
+
+      if (row + 1 <= n && isOpen(row + 1, col)) {
+        uf.union(p, gridValue(row + 1, col, n));
+      }
+      if (row - 1 >= 1 && isOpen(row - 1, col)) {
+        uf.union(p, gridValue(row - 1, col, n));
+      }
+      if (col + 1 <= n && isOpen(row, col + 1)) {
+        uf.union(p, gridValue(row, col + 1, n));
+      }
+      if (col - 1 >= 1 && isOpen(row, col - 1)) {
+        uf.union(p, gridValue(row, col - 1, n));
       }
     }
   }
 
   public boolean isOpen(int row, int col) {
     validates(row, col);
+
     return grid[row - 1][col - 1];
   }
 
   public boolean isFull(int row, int col) {
     validates(row, col);
-    return !grid[row - 1][col - 1];
+
+    int n = grid[0].length;
+    return uf.connected(virtualTop, gridValue(row, col, n));
   }
 
   public int numberOfOpenSites() {
@@ -60,7 +68,7 @@ public class Percolation {
     return uf.connected(virtualTop, virtualBottom);
   }
 
-  private void validates(int row, int col, int n) {
+  private void validates(int row, int col) {
     int n = grid[0].length;
 
     if (row < 1 || row > n) {
@@ -72,8 +80,5 @@ public class Percolation {
 
   private int gridValue(int row, int col, int n) {
     return n * (row - 1) + col;
-  }
-
-  public static void main(String[] args) {
   }
 }

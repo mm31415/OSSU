@@ -3,3 +3,5 @@ algs4.jar
 percolation_data/
 *.txt
 *.class
+PercolationVisualizer.java
+InteractivePercolationVisualizer.java
