@@ -2,10 +2,12 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-  private int n;
-  private int trials;
-  private Percolation perc;
+  private final int n;
+  private final int trials;
   private double[] threshold;
+  private final double CONF_95 = 1.96;
+  private final double meanThresh;
+  private final double stdDev;
 
   public PercolationStats(int n, int trials) {
     if (n <= 0 || trials <= 0) {
@@ -16,9 +18,13 @@ public class PercolationStats {
     threshold = new double[trials];
 
     runTests();
+    meanThresh = mean();
+    stdDev = stddev();
   }
 
   private void runTests() {
+    Percolation perc;
+
     for (int i = 0; i < trials; i++) {
       perc = new Percolation(n);
       while (!perc.percolates()) {
@@ -40,11 +46,11 @@ public class PercolationStats {
   }
 
   public double confidenceLo() {
-    return mean() - (1.96 * stddev() / Math.sqrt(trials));
+    return meanThresh - (CONF_95 * stdDev / Math.sqrt(trials));
   }
 
   public double confidenceHi() {
-    return mean() + (1.96 * stddev() / Math.sqrt(trials));
+    return meanThresh + (CONF_95 * stdDev / Math.sqrt(trials));
   }
 
   public static void main(String[] args) {

@@ -2,10 +2,10 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
   private boolean[][] grid;
-  private WeightedQuickUnionUF uf;
+  private final WeightedQuickUnionUF uf;
   private int openSites;
-  private int virtualTop;
-  private int virtualBottom;
+  private final int virtualTop;
+  private final int virtualBottom;
 
   public Percolation(int n) {
     if (n <= 0) throw new IllegalArgumentException("n must be greater than 0");
@@ -26,12 +26,12 @@ public class Percolation {
       int n = grid[0].length;
       int p = gridValue(row, col, n);
 
-      if (row == n) {
-        uf.union(p, virtualBottom);
-      } else if (row == 1) {
-          uf.union(p, virtualTop);
+      // always union to the top when opening site in top row
+      if (row == 1) {
+        uf.union(p, virtualTop);
       }
 
+      // check surrounding sites that are open and union
       if (row + 1 <= n && isOpen(row + 1, col)) {
         uf.union(p, gridValue(row + 1, col, n));
       }
@@ -43,6 +43,12 @@ public class Percolation {
       }
       if (col - 1 >= 1 && isOpen(row, col - 1)) {
         uf.union(p, gridValue(row, col - 1, n));
+      }
+
+      // only union to virtualBottom if the site is full
+      // this prevents the backwash
+      if (row == n && isFull(row, col)) {
+        uf.union(p, virtualBottom);
       }
     }
   }
