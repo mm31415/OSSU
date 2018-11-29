@@ -5,3 +5,5 @@ percolation_data/
 *.class
 PercolationVisualizer.java
 InteractivePercolationVisualizer.java
+*.zip
+.gitignore
