@@ -39,12 +39,12 @@ public class PercolationStats {
     return StdStats.stddev(threshold);
   }
 
-  public double confidencLo() {
-    return 1.0;
+  public double confidenceLo() {
+    return mean() - (1.96 * stddev() / Math.sqrt(trials));
   }
 
   public double confidenceHi() {
-    return 1.0;
+    return mean() + (1.96 * stddev() / Math.sqrt(trials));
   }
 
   public static void main(String[] args) {
@@ -62,7 +62,12 @@ public class PercolationStats {
 
     PercolationStats pStat = new PercolationStats(n, trials);
 
-    System.out.println("mean = " + pStat.mean());
-    System.out.println("stddev = " + pStat.stddev());
+    System.out.println("mean\t\t\t= " + pStat.mean());
+    System.out.println("stddev\t\t\t= " + pStat.stddev());
+    System.out.println(
+      "95% confidence interval\t= [" + pStat.confidenceLo() +
+      ", " + pStat.confidenceHi() + "]\n"
+    );
+
   }
 }
