@@ -26,12 +26,13 @@ public class Percolation {
       int n = grid[0].length;
       int p = gridValue(row, col, n);
 
-      // always union to the top when opening site in top row
       if (row == 1) {
         uf.union(p, virtualTop);
       }
+      if (row == n) {
+        uf.union(p, virtualBottom);
+      }
 
-      // check surrounding sites that are open and union
       if (row + 1 <= n && isOpen(row + 1, col)) {
         uf.union(p, gridValue(row + 1, col, n));
       }
@@ -45,11 +46,6 @@ public class Percolation {
         uf.union(p, gridValue(row, col - 1, n));
       }
 
-      // only union to virtualBottom if the site is full
-      // this prevents the backwash
-      if (row == n && isFull(row, col)) {
-        uf.union(p, virtualBottom);
-      }
     }
   }
 
