@@ -7,9 +7,8 @@
   Note that the TYPE cannot be a primitive type it must be wrapped with a
   wrapper class of the primitive type: Integer, Boolean, Chararcter
 
-  Autoboxing and Unboxing is applied by Java automatically:
-
-
+  Autoboxing and Unboxing is applied by Java automatically to the primitive
+  wrapper types
 */
 public class StackListGeneric<Item> {
   private Node first = null;

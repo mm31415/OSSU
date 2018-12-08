@@ -7,7 +7,6 @@ class StringStackArrayList {
 
   public StringStackArrayList() {
     s = new String[1];
-    N = 0;
   }
 
   public void push(String item) {
